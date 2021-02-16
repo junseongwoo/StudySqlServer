@@ -22,7 +22,7 @@ begin
 	fetch next from cur_usertbl into @userName, @height;
 	print concat('패치 : ', @@FETCH_STATUS);
 	if @@FETCH_STATUS = -1
-		print concat('패치완료 : ', 'GOOD');
+		print '패치완료';
 end 
 
 print @height;
