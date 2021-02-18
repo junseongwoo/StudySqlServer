@@ -1,4 +1,7 @@
-﻿/*-- 실제 회원정보 불러오기 이름순
+﻿USE BookRentalShopDB
+GO
+
+/*-- 실제 회원정보 불러오기 이름순
 SELECT memberID, memberName, levels, mobile, email
   FROM MemberTBL
  WHERE levels <> 'S'
@@ -34,17 +37,17 @@ SELECT bookIdx
      , format(price, '#,#원') as 가격
   FROM booksTBL*/
 
--- 책정보 조인
-SELECT b.bookIdx
+---- 책정보 조인
+/*SELECT b.bookIdx
      , b.cateIdx
-	 , c.cateName
-     , b.bookName
+	 , c.cateName-     
+	 , b.bookName
      , b.author
      , b.interpreter
      , b.company
   FROM booksTBL as b
  INNER JOIN cateTBL as c
-    ON c.cateIdx = b.cateIdx;
+    ON c.cateIdx = b.cateIdx;*/
  
 -- 대여된 책의 정보 쿼리 조인
 SELECT r.rentalIdx
@@ -52,19 +55,18 @@ SELECT r.rentalIdx
      --, r.bookIdx
 	 , b.bookName
      , format(r.rentalDt, 'yyyy-MM-dd') as '대여일'
-     , format(r.returnDt, 'yyyy-MM-dd') as '반납일'
-	 , isnull(r.returnDt, '미반납')
+     , isnull(format(r.returnDt, 'yyyy-MM-dd'), '미반납') as '반납일'
      , dbo.ufn_getState(r.rentalState) as '상태'
   FROM rentalTBL as r 
  INNER JOIN booksTBL as b
     ON r.bookIdx = b.bookIdx
  INNER JOIN MemberTBL as m
     ON m.memberIdx = r.memberIdx 
- WHERE r.returnDt is null
+ --WHERE r.returnDt is null
 
 
 -- 책을 안빌린 회원 조회
-SELECT r.rentalIdx
+/*SELECT r.rentalIdx
      , m.memberName
 	 , b.bookName
      , format(r.rentalDt, 'yyyy-MM-dd') as '대여일'
@@ -85,4 +87,4 @@ SELECT c.cateIdx, c.cateName, b.bookName
 SELECT c.cateIdx, c.cateName, b.bookName
   FROM cateTBL as c
  INNER JOIN booksTBL as b
-    ON c.cateIdx = b.cateIdx
+    ON c.cateIdx = b.cateIdx */
