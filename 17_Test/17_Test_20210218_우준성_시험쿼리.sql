@@ -22,7 +22,7 @@ SELECT TOP(10)
 
 SELECT Idx, 
 	   CONCAT('제목 : ', Names) AS 'Names',
-	   CONCAT('저자 > ', Names) AS 'Author',
+	   CONCAT('저자 > ', Author) AS 'Author',
 	   ReleaseDate AS '출판일',
 	   ISBN, 
 	   FORMAT(price, '#,#원') AS '가격' 
