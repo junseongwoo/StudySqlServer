@@ -1,4 +1,7 @@
-﻿-- 1-1번
+﻿USE bookrentalshop
+GO
+
+-- 1-1번
 
 SELECT LOWER(email) AS 'email' , mobile, names, addr
   FROM membertbl
@@ -23,7 +26,7 @@ SELECT TOP(10)
 SELECT Idx, 
 	   CONCAT('제목 : ', Names) AS 'Names',
 	   CONCAT('저자 > ', Author) AS 'Author',
-	   ReleaseDate AS '출판일',
+	   format(ReleaseDate, 'yyyy년 MM월 dd일') AS '출판일',
 	   ISBN, 
 	   FORMAT(price, '#,#원') AS '가격' 
   FROM bookstbl
@@ -83,3 +86,12 @@ SELECT d.names,
  INNER JOIN divtbl AS d 
     ON b.Division = d.Division
  GROUP BY d.Names WITH ROLLUP
+
+-- 5번 inner join 안쓰고 풀기
+SELECT (SELECT names FROM divtbl where Division = a.Division) as names,
+        a.sum_price
+  FROM
+       (SELECT b.Division,
+			   SUM(b.Price) AS sum_price
+		  FROM bookstbl AS b
+		 GROUP BY b.Division) AS a;
